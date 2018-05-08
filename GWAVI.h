@@ -8,7 +8,6 @@
 #ifndef GWAVI_H_
 #define GWAVI_H_
 
-#include <stdio.h>
 #include <fstream>
 
 class GWAVI {
