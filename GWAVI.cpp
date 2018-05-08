@@ -2,8 +2,10 @@
  * GWAVI.cpp
  *
  *
- * Copyright (c) 2008-2011, Michael Kohn
- * Copyright (c) 2013, Robin Hahling
+ * Copyright (c) 2008-2011, Michael Kohn <mike@mikekohn.net> http://www.mikekohn.net/
+ *
+ * Copyright (c) 2013, Robin Hahling "Rolinh" <robin.hahling@gw-computing.net>
+ *
  * Copyright (c) 2018, olegvedi@gmail.com (C++ implementation)
  *
  * All rights reserved.
@@ -414,6 +416,7 @@ void GWAVI::write_avi_header(struct gwavi_header_t *avi_header)
     write_chars_bin("avih", 4);
     marker = outFile.tellp();
     write_int(0);
+
     write_int(avi_header->time_delay);
     write_int(avi_header->data_rate);
     write_int(avi_header->reserved);
@@ -433,7 +436,6 @@ void GWAVI::write_avi_header(struct gwavi_header_t *avi_header)
 
     t = outFile.tellp();
     outFile.seekp(marker, ios_base::beg);
-
     write_int((unsigned int) (t - marker - 4));
     outFile.seekp(t, ios_base::beg);
 }

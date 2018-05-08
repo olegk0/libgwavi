@@ -1,6 +1,6 @@
 ## AUTHORS
 
-  * Michael Kohn (2008-2011, original author of libkohn-avi)
+  * Michael Kohn <mike@mikekohn.net> http://www.mikekohn.net/ (2008-2011, original author of libkohn-avi)
 
   * Robin Hahling "Rolinh" <robin.hahling@gw-computing.net> (2013, gwavi fork
     of libkohn-avi)

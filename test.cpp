@@ -61,7 +61,7 @@ main(void)
     unsigned char *buffer;
     ssize_t r;
     size_t count, len, buffer_len = 0;
-    int i, fd, ret;
+    int i, fd;
 
     /* TODO: add audio */
     /* gwavi = gwavi_open(avi_out, width, height, fourcc, fps, &audio); */
@@ -69,7 +69,7 @@ main(void)
 
     /* read 15 jpg images that will act as frames */
     for (i = 1; i < 16; i++) {
-	ret = sprintf(filename, "video-src/%02d.jpg", i);
+	sprintf(filename, "video-src/%02d.jpg", i);
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1) {
