@@ -60,7 +60,7 @@ using namespace std;
  * this argument.
  *
  */
-GWAVI::GWAVI(const char *filename, unsigned int width, unsigned int height, const char *fourcc, unsigned int fps,
+GWAVI::GWAVI(const char *filename, unsigned width, unsigned height, unsigned bpp, const char *fourcc, unsigned fps,
 	gwavi_audio_t *audio)
 {
     ZEROIZE(avi_header);
@@ -88,7 +88,7 @@ GWAVI::GWAVI(const char *filename, unsigned int width, unsigned int height, cons
 
 	/* set avi header */
 	avi_header.time_delay = 1000000 / fps;
-	avi_header.data_rate = width * height * 3;
+	avi_header.data_rate = width * height * bpp / 8;
 	avi_header.flags = 0x10;
 
 	if (audio)
@@ -100,14 +100,14 @@ GWAVI::GWAVI(const char *filename, unsigned int width, unsigned int height, cons
 	avi_header.number_of_frames = 0;
 	avi_header.width = width;
 	avi_header.height = height;
-	avi_header.buffer_size = (width * height * 3);
+	avi_header.buffer_size = (width * height * bpp / 8);
 
 	/* set stream header */
 	(void) strcpy(stream_header_v.data_type, "vids");
 	(void) memcpy(stream_header_v.codec, fourcc, 4);
 	stream_header_v.time_scale = 1;
 	stream_header_v.data_rate = fps;
-	stream_header_v.buffer_size = (width * height * 3);
+	stream_header_v.buffer_size = (width * height * bpp / 8);
 	stream_header_v.data_length = 0;
 
 	/* set stream format */
@@ -115,7 +115,7 @@ GWAVI::GWAVI(const char *filename, unsigned int width, unsigned int height, cons
 	stream_format_v.width = width;
 	stream_format_v.height = height;
 	stream_format_v.num_planes = 1;
-	stream_format_v.bits_per_pixel = 24;
+	stream_format_v.bits_per_pixel = bpp;
 	stream_format_v.compression_type = ((unsigned int) fourcc[3] << 24) + ((unsigned int) fourcc[2] << 16)
 		+ ((unsigned int) fourcc[1] << 8) + ((unsigned int) fourcc[0]);
 	stream_format_v.image_size = width * height * 3;
@@ -199,13 +199,11 @@ int GWAVI::AddVideoFrame(unsigned char *buffer, size_t len)
     size_t t;
 
     if (!buffer) {
-	(void) fputs("gwavi and/or buffer argument cannot be NULL",
-	stderr);
+	fputs("gwavi and/or buffer argument cannot be NULL", stderr);
 	return -1;
     }
     if (len < 256)
-	(void) fprintf(stderr, "WARNING: specified buffer len seems "
-		"rather small: %d. Are you sure about this?\n", (int) len);
+	fprintf(stderr, "WARNING: specified buffer len seems rather small: %d. Are you sure about this?\n", (int) len);
     try {
 	offset_count++;
 	stream_header_v.data_length++;
@@ -255,8 +253,7 @@ int GWAVI::AddAudioFrame(unsigned char *buffer, size_t len)
     size_t t;
 
     if (!buffer) {
-	(void) fputs("gwavi and/or buffer argument cannot be NULL",
-	stderr);
+	(void) fputs("gwavi and/or buffer argument cannot be NULL", stderr);
 	return -1;
     }
     try {

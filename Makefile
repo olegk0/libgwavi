@@ -1,15 +1,14 @@
 CXXFLAGS =	-O2 -g -Wall -fmessage-length=0
 
-OBJS =		test.o GWAVI.o
+TARGET =	test_jpg
 
-LIBS = 
+all:	test_jpg test_png
 
-TARGET =	test
+test_jpg:	test_jpg.o GWAVI.o
+	$(CXX) -o test_jpg test_jpg.o GWAVI.o
 
-$(TARGET):	$(OBJS)
-	$(CXX) -o $(TARGET) $(OBJS) $(LIBS)
-
-all:	$(TARGET)
+test_png:	test_png.o GWAVI.o
+	$(CXX) -o test_png test_png.o GWAVI.o
 
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f test_jpg.o test_png.o GWAVI.o test_jpg test_png

@@ -54,7 +54,7 @@ main(void)
     unsigned int height = 240;	  /* set video height */
     unsigned int fps = 3;		  /* set number of frames per second */
     const char *fourcc = "MJPG";		  /* set fourcc used */
-    const char *avi_out = "example.avi";    /* set out file name */
+    const char *avi_out = "example_mjpeg.avi";    /* set out file name */
 
     struct stat frame_stat;
     char filename[FILENAME_LEN];
@@ -65,11 +65,11 @@ main(void)
 
     /* TODO: add audio */
     /* gwavi = gwavi_open(avi_out, width, height, fourcc, fps, &audio); */
-    GWAVI gwavi(avi_out, width, height, fourcc, fps, NULL);
+    GWAVI gwavi(avi_out, width, height, 24, fourcc, fps, NULL);
 
     /* read 15 jpg images that will act as frames */
     for (i = 1; i < 16; i++) {
-	sprintf(filename, "video-src/%02d.jpg", i);
+	sprintf(filename, "src-jpg/%02d.jpg", i);
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1) {

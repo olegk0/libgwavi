@@ -77,7 +77,7 @@ public:
 	unsigned int samples_per_second;
     } gwavi_audio_t;
 
-    GWAVI(const char *filename, unsigned int width, unsigned int height, const char *fourcc, unsigned int fps,
+    GWAVI(const char *filename, unsigned width, unsigned height, unsigned bpp, const char *fourcc, unsigned fps,
 	    gwavi_audio_t *audio);
     virtual ~GWAVI();
 
@@ -90,7 +90,6 @@ public:
 
 private:
     std::ofstream outFile;
-//    FILE *fileOut;
     struct gwavi_header_t avi_header;
     struct gwavi_stream_header_t stream_header_v;
     struct gwavi_stream_format_v_t stream_format_v;
